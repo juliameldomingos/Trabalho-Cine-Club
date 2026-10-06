@@ -366,7 +366,7 @@ def excluir_filme(id):
     if filme is None:
         return redirect(url_for('listar_filmes'))
 
-    # Não deixa excluir um filme que ainda tem sessões marcadas
+    # Não deixa excluir um filme que ainda tem sessões marcadas.
     for s in sessoes:
         if s['filme'] == filme['titulo']:
             return render_template('listar_filmes.html', filmes=filmes,
