@@ -1,0 +1,137 @@
+/* =====================================================================
+   ESTILO DO CINE CLUB
+   Visual simples: fundo preto com detalhes em vermelho (e roxo em um botão).
+   Este arquivo é carregado DEPOIS do Bootstrap, por isso o que escrevemos
+   aqui "ganha" do Bootstrap quando os dois mexem na mesma coisa.
+   Para trocar as cores do site inteiro, mude só as variáveis abaixo.
+   ===================================================================== */
+
+/* ---------- 1. CORES ---------- */
+:root {
+  --preto: #000000;          /* fundo da página */
+  --painel: #121212;         /* caixas, tabelas e formulários */
+  --linha: #2e2e2e;          /* bordas discretas */
+  --vermelho: #d62839;       /* cor de destaque principal */
+  --vermelho-escuro: #9e1b29;
+  --roxo: #7b2cbf;           /* cor de destaque secundária */
+  --texto: #f2f2f2;
+}
+
+/* ---------- 2. AJUSTES NAS VARIÁVEIS DO BOOTSTRAP ----------
+   O Bootstrap 5.3 pinta o site lendo as variáveis --bs-...
+   Trocando os valores aqui, ele passa a usar as nossas cores. */
+html[data-bs-theme="dark"] {
+  --bs-body-bg: var(--preto);
+  --bs-body-color: var(--texto);
+  --bs-border-color: var(--linha);
+  --bs-link-color-rgb: 255, 107, 122;        /* links em vermelho claro */
+  --bs-link-hover-color-rgb: 255, 160, 168;
+}
+
+/* ---------- 3. TÍTULO DE CADA PÁGINA ---------- */
+.titulo-pagina {
+  font-size: 2rem;
+  border-left: 5px solid var(--vermelho);    /* barra vermelha à esquerda */
+  padding-left: .75rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ---------- 4. MENU SUPERIOR ---------- */
+.navbar-cinema {
+  background: #0a0a0a;
+  border-bottom: 3px solid var(--vermelho);
+}
+.navbar-cinema .navbar-brand { color: var(--vermelho); font-weight: 700; }
+.navbar-cinema .nav-link:hover,
+.navbar-cinema .nav-link:focus { color: var(--vermelho); }
+.dropdown-menu { background: var(--painel); border: 1px solid var(--linha); }
+.dropdown-item:hover { background: var(--vermelho); color: #fff; }
+
+/* ---------- 5. RODAPÉ ---------- */
+.rodape {
+  background: #0a0a0a;
+  border-top: 3px solid var(--vermelho);
+  text-align: center;
+  padding: 14px;
+}
+
+/* ---------- 6. CAIXAS ---------- */
+.painel {
+  background: var(--painel);
+  border: 1px solid var(--linha);
+  border-radius: .5rem;
+  padding: 1.5rem;
+}
+
+/* ---------- 7. FORMULÁRIOS ---------- */
+.form-label { font-weight: 600; }
+.form-control, .form-select {
+  background-color: #0d0d0d;
+  border-color: #3a3a3a;
+  color: var(--texto);
+}
+/* Campo selecionado: contorno vermelho */
+.form-control:focus, .form-select:focus {
+  background-color: #0d0d0d;
+  color: var(--texto);
+  border-color: var(--vermelho);
+  box-shadow: 0 0 0 .2rem rgba(214, 40, 57, .3);
+}
+.text-danger { color: #ff6b7a !important; }   /* vermelho mais claro, legível no preto */
+
+/* ---------- 8. BOTÕES ---------- */
+/* Salvar, Adicionar, Entrar e Excluir: vermelho */
+.btn-success, .btn-danger {
+  --bs-btn-bg: var(--vermelho);
+  --bs-btn-border-color: var(--vermelho);
+  --bs-btn-hover-bg: #e63a4b;
+  --bs-btn-hover-border-color: #e63a4b;
+  --bs-btn-active-bg: var(--vermelho-escuro);
+  --bs-btn-active-border-color: var(--vermelho-escuro);
+}
+/* CADASTRAR (login): roxo */
+.btn-primary {
+  --bs-btn-bg: var(--roxo);
+  --bs-btn-border-color: var(--roxo);
+  --bs-btn-hover-bg: #9147d6;
+  --bs-btn-hover-border-color: #9147d6;
+  --bs-btn-active-bg: #5e1f96;
+  --bs-btn-active-border-color: #5e1f96;
+}
+
+/* ---------- 9. TABELAS ---------- */
+.tabela-cinema {
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: rgba(255, 255, 255, .04);   /* listras bem suaves */
+  --bs-table-hover-bg: rgba(214, 40, 57, .22);       /* linha sob o mouse fica avermelhada */
+  --bs-table-color: var(--texto);
+  --bs-table-border-color: var(--linha);
+  margin-bottom: 0;
+}
+.tabela-cinema thead th {
+  border-bottom: 2px solid var(--vermelho);
+  white-space: nowrap;
+}
+.tabela-cinema .valor { color: #ff6b7a; font-weight: 600; white-space: nowrap; }
+
+/* ---------- 10. CARTÃO DAS TELAS SEM MENU (login, criar conta, recuperar senha) ---------- */
+.cartao-login {
+  background: var(--painel);
+  border: 1px solid var(--linha);
+  border-top: 3px solid var(--vermelho);
+}
+
+/* Nome "Cine Club" no topo das telas de login */
+.marca {
+  color: var(--vermelho);
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+/* "Cine Club" gigante da página inicial */
+.titulo-grande {
+  color: var(--vermelho);
+  letter-spacing: .06em;
+  font-size: clamp(3.5rem, 12vw, 8rem);   /* cresce com a janela, mas tem limite */
+}

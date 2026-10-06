@@ -1,0 +1,46 @@
+{# TELA "CRIAR CONTA": o botão CADASTRAR do login leva até aqui. Template SEM menu. #}
+{% extends 'base_login.html' %}
+{% block titulo %}Criar conta - Cine Club{% endblock %}
+
+{% block content %}
+<h3 class="text-center mb-4">Criar conta</h3>
+
+{# Mostra os erros de validação, se houver #}
+{% for erro in erros %}
+<div class="alert alert-danger py-2" role="alert">{{ erro }}</div>
+{% endfor %}
+
+<!-- O formulário envia para a própria rota "registrar" -->
+<form method="post" action="{{ url_for('registrar') }}">
+
+  <!-- value="..." preenche o campo com o que a pessoa já digitou (dados_form vem do app.py),
+       assim ela não precisa escrever tudo de novo quando há um erro -->
+  <div class="mb-3">
+    <label for="nome" class="form-label">Nome:</label>
+    <input type="text" class="form-control" id="nome" name="nome" value="{{ dados_form.nome }}" placeholder="Digite seu nome" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">E-mail:</label>
+    <input type="email" class="form-control" id="email" name="email" value="{{ dados_form.email }}" placeholder="Digite seu e-mail" required>
+  </div>
+
+  <!-- minlength="6": o navegador já exige pelo menos 6 caracteres (o app.py confere de novo) -->
+  <div class="mb-3">
+    <label for="senha" class="form-label">Password:</label>
+    <input type="password" class="form-control" id="senha" name="senha" minlength="6" placeholder="Mínimo de 6 caracteres" required>
+  </div>
+
+  <!-- Segunda digitação da senha, para evitar erro de digitação -->
+  <div class="mb-3">
+    <label for="confirmar" class="form-label">Confirmar password:</label>
+    <input type="password" class="form-control" id="confirmar" name="confirmar" minlength="6" placeholder="Repita a senha" required>
+  </div>
+
+  <button type="submit" class="btn btn-success w-100 mb-3">Criar conta</button>
+
+  <div class="text-center">
+    <a href="{{ url_for('login') }}" class="text-decoration-none">Já tenho conta. Voltar ao login</a>
+  </div>
+</form>
+{% endblock %}

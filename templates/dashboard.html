@@ -1,0 +1,12 @@
+{# PÁGINA INICIAL (dashboard). Herda o menu e o rodapé do base.html. #}
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Saudação. session.get('usuario') traz o nome de quem fez login -->
+<h1 class="titulo-pagina">Bem-vindo, {{ session.get('usuario') }}</h1>
+
+<!-- Nome do sistema em letras grandes.
+     display-1 = tamanho gigante do Bootstrap; fw-bold = negrito; text-center = centralizado;
+     py-5 = bastante espaço em cima e embaixo. A cor vermelha vem da classe titulo-grande (estilo.css). -->
+<div class="titulo-grande display-1 fw-bold text-center py-5">Cine Club</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{# TELA "RECUPERAR SENHA": a pessoa informa o e-mail e escolhe uma nova senha. Template SEM menu. #}
+{% extends 'base_login.html' %}
+{% block titulo %}Recuperar senha - Cine Club{% endblock %}
+
+{% block content %}
+<h3 class="text-center mb-4">Recuperar senha</h3>
+
+{# Erros: e-mail não encontrado, senha curta, senhas diferentes... #}
+{% for erro in erros %}
+<div class="alert alert-danger py-2" role="alert">{{ erro }}</div>
+{% endfor %}
+
+<form method="post" action="{{ url_for('recuperar_senha') }}">
+
+  <!-- E-mail da conta que terá a senha trocada -->
+  <div class="mb-3">
+    <label for="email" class="form-label">E-mail:</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu e-mail" required>
+  </div>
+
+  <!-- Nova senha e confirmação -->
+  <div class="mb-3">
+    <label for="senha" class="form-label">Nova password:</label>
+    <input type="password" class="form-control" id="senha" name="senha" placeholder="Mínimo de 6 caracteres" required>
+  </div>
+  <div class="mb-3">
+    <label for="confirmar" class="form-label">Confirmar password:</label>
+    <input type="password" class="form-control" id="confirmar" name="confirmar" placeholder="Repita a senha" required>
+  </div>
+
+  <button type="submit" class="btn btn-danger w-100 mb-3">Salvar nova senha</button>
+
+  <div class="text-center">
+    <a href="{{ url_for('login') }}" class="text-decoration-none">Voltar ao login</a>
+  </div>
+</form>
+{% endblock %}

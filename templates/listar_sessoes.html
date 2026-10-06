@@ -1,0 +1,68 @@
+{# LISTAGEM DE SESSÕES. Todos os usuários logados podem consultar. #}
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Linha com o título à esquerda e o botão ADICIONAR à direita.
+     d-flex = itens lado a lado; justify-content-between = um em cada ponta;
+     align-items-end = alinhados pela base; mb-3 = margem embaixo. -->
+<div class="d-flex justify-content-between align-items-end mb-3">
+  <h1 class="titulo-pagina mb-0">Listagem de Sessões</h1>
+
+  {# Só o Administrador pode cadastrar, então só ele vê o botão #}
+  {% if session.get('nivel') == 'Administrador' %}
+  <a href="{{ url_for('cadastrar_sessao') }}" class="btn btn-success">ADICIONAR</a>
+  {% endif %}
+</div>
+
+{# Mensagens de erro enviadas pelo app.py (ex.: não dá para excluir um filme que tem sessões) #}
+{% for erro in erros %}
+<div class="alert alert-danger py-2" role="alert">{{ erro }}</div>
+{% endfor %}
+
+<!-- Caixa que envolve a tabela -->
+<div class="painel">
+  <!-- table-responsive cria uma barra de rolagem lateral se a tabela não couber (celular) -->
+  <div class="table-responsive">
+    <!-- table-striped = linhas alternadas; table-hover = destaca a linha sob o mouse; tabela-cinema = nosso estilo -->
+    <table class="table table-striped table-hover tabela-cinema">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>FILME</th><th>DATA</th><th>HORÁRIO</th><th>SALA</th><th>VALOR</th>
+          {# A coluna de ações só existe para o Administrador #}
+          {% if session.get('nivel') == 'Administrador' %}<th>AÇÕES</th>{% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {# O for repete uma linha (tr) para cada item da lista enviada pelo app.py #}
+        {% for item in sessoes %}
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.filme }}</td>
+          <td>{{ item.data }}</td>
+          <td>{{ item.horario }}</td>
+          <td>{{ item.sala }}</td>
+          <td class="valor">R$ {{ item.valor }}</td>
+          {% if session.get('nivel') == 'Administrador' %}
+          <td class="text-nowrap">
+            <!-- EDITAR: link para a página de cadastro, mas com o ID do item na URL.
+                 url_for com id=item.id monta o endereço de edição (ex.: /filmes/editar/2). -->
+            <a href="{{ url_for('cadastrar_sessao', id=item.id) }}" class="btn btn-sm btn-outline-light">Editar</a>
+            <!-- EXCLUIR: formulário com method post (excluir muda dados, então não pode ser um link comum).
+                 O onsubmit abre uma janela de confirmação; se a pessoa cancelar, nada é enviado. -->
+            <form method="post" action="{{ url_for('excluir_sessao', id=item.id) }}" class="d-inline"
+                  onsubmit="return confirm('Tem certeza que deseja excluir este registro?');">
+              <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
+            </form>
+          </td>
+          {% endif %}
+        </tr>
+        {# O else do for roda quando a lista está vazia #}
+        {% else %}
+        <tr><td colspan="7" class="text-center text-muted py-4">Nenhum registro cadastrado ainda.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

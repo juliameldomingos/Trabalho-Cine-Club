@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!-- Documento HTML5. data-bs-theme="dark" liga o modo escuro do Bootstrap -->
+<html lang="pt-br" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {# TEMPLATE BASE COM MENU.
+     Todas as páginas internas (dashboard, listagens e cadastros) herdam deste arquivo
+     com {% extends 'base.html' %}. Assim o menu e o rodapé são escritos UMA vez só.
+     Cada página preenche o bloco "content" (e, se quiser, o bloco "titulo"). #}
+  <title>{% block titulo %}Cine Club - Administração{% endblock %}</title>
+
+  <!-- Bootstrap (estilos prontos) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  {# Nosso CSS, depois do Bootstrap, para podermos alterar as cores dele #}
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+
+<!-- d-flex flex-column min-vh-100: o body vira uma coluna com altura da tela.
+     Com o "flex-grow-1" no main, o rodapé fica sempre no fim da tela, mesmo com pouco conteúdo. -->
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- ================= MENU SUPERIOR =================
+       navbar ............. barra de navegação do Bootstrap
+       navbar-expand-lg ... em telas grandes mostra o menu aberto; em telas pequenas, vira botão "hambúrguer"
+       navbar-dark ........ letras claras
+       navbar-cinema ...... nosso estilo (veludo + borda dourada) -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-cinema">
+    <div class="container-fluid px-4">
+
+      <!-- Nome do sistema. Clicar leva ao dashboard -->
+      <a class="navbar-brand" href="{{ url_for('dashboard') }}">Cine Club</a>
+
+      <!-- Botão "hambúrguer" que aparece só no celular. data-bs-target aponta para o menu com id="menu" -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
+              aria-controls="menu" aria-expanded="false" aria-label="Abrir menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Parte do menu que se recolhe no celular -->
+      <div class="collapse navbar-collapse" id="menu">
+
+        <!-- Lista de itens. me-auto empurra o que vem depois (busca, nome e SAIR) para a direita -->
+        <ul class="navbar-nav me-auto">
+
+          {# session guarda quem fez login. Só o Administrador enxerga a aba Usuários. #}
+          {% if session.get('nivel') == 'Administrador' %}
+          <!-- Menu suspenso (dropdown) de Usuários -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Usuários</a>
+            <ul class="dropdown-menu">
+              {# url_for('nome_da_funcao') gera o endereço da rota. Se o endereço mudar no app.py, o menu continua certo. #}
+              <li><a class="dropdown-item" href="{{ url_for('listar_usuarios') }}">Listagem de Usuários</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('cadastrar_usuario') }}">Cadastro de Usuários</a></li>
+            </ul>
+          </li>
+          {% endif %}
+
+          <!-- Menu suspenso de Filmes: todos veem a listagem -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Filmes</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{ url_for('listar_filmes') }}">Listagem de Filmes</a></li>
+              {# O cadastro só aparece para o Administrador #}
+              {% if session.get('nivel') == 'Administrador' %}
+              <li><a class="dropdown-item" href="{{ url_for('cadastrar_filme') }}">Cadastro de Filmes</a></li>
+              {% endif %}
+            </ul>
+          </li>
+
+          <!-- Menu suspenso de Sessões: mesma regra dos filmes -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Sessões</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{ url_for('listar_sessoes') }}">Listagem de Sessões</a></li>
+              {% if session.get('nivel') == 'Administrador' %}
+              <li><a class="dropdown-item" href="{{ url_for('cadastrar_sessao') }}">Cadastro de Sessões</a></li>
+              {% endif %}
+            </ul>
+          </li>
+        </ul>
+
+        <!-- Campo "Procurar": só visual por enquanto, igual ao exemplo do professor.
+             d-flex coloca os itens lado a lado; me-2 dá um espaço à direita. -->
+        <form class="d-flex me-2">
+          <input class="form-control" type="search" placeholder="Procurar" aria-label="Procurar">
+        </form>
+
+        {# Mostra o nome e o nível de quem está logado #}
+        <span class="text-white mx-3">{{ session.get('usuario') }} ({{ session.get('nivel') }})</span>
+
+        <!-- Botão SAIR: a rota "sair" apaga o login e volta para a tela de entrada -->
+        <a href="{{ url_for('sair') }}" class="btn btn-outline-light">SAIR</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================= CONTEÚDO DA PÁGINA =================
+       container ......... centraliza e limita a largura do conteúdo
+       flex-grow-1 ....... ocupa o espaço que sobra (empurra o rodapé para baixo)
+       py-5 .............. espaço de cima e de baixo -->
+  <main class="container flex-grow-1 py-5">
+    {# Cada página filha escreve o seu conteúdo aqui dentro #}
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ================= RODAPÉ ================= -->
+  <footer class="rodape">
+    <p>Projeto desenvolvido por: Seu Nome</p>
+  </footer>
+
+  <!-- JavaScript do Bootstrap: faz funcionar os menus suspensos e o botão hambúrguer -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

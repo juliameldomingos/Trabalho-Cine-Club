@@ -1,0 +1,55 @@
+{# TELA DE LOGIN. Usa o template SEM menu (base_login.html). #}
+{% extends 'base_login.html' %}
+
+{# Texto que aparece na aba do navegador #}
+{% block titulo %}Login - Cine Club{% endblock %}
+
+{% block content %}
+<h3 class="text-center mb-4">Login</h3>
+
+{# Lista de erros (ex.: senha incorreta). O app.py envia "erros" ao renderizar a página.
+   O for repete uma caixa vermelha (alert-danger) para cada erro. #}
+{% for erro in erros %}
+<div class="alert alert-danger py-2" role="alert">{{ erro }}</div>
+{% endfor %}
+
+{# "sucesso" só existe depois de criar a conta ou trocar a senha. O if mostra a caixa verde apenas nesse caso. #}
+{% if sucesso %}
+<div class="alert alert-success py-2" role="alert">{{ sucesso }}</div>
+{% endif %}
+
+<!-- method="post" envia os dados de forma oculta (não aparecem no endereço).
+     action aponta SEMPRE para a rota de login. Sem isso, o formulário enviaria
+     para o endereço atual (ex.: /cadastrar) e daria erro. -->
+<form method="post" action="{{ url_for('login') }}">
+
+  <!-- Campo de e-mail. O "name" (email) é o nome que o app.py usa em request.form.get('email').
+       type="email" já valida o formato; required impede enviar vazio. -->
+  <div class="mb-3">
+    <label for="email" class="form-label">E-mail:</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu e-mail" required>
+  </div>
+
+  <!-- Campo de senha: type="password" esconde o que é digitado -->
+  <div class="mb-3">
+    <label for="senha" class="form-label">Password:</label>
+    <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" required>
+  </div>
+
+  <!-- Botão que envia o formulário. w-100 = largura total -->
+  <button type="submit" class="btn btn-danger w-100 mb-3">Entrar</button>
+
+  <!-- Link para a tela de recuperar senha (rota "recuperar_senha") -->
+  <div class="text-center mb-3">
+    <a href="{{ url_for('recuperar_senha') }}" class="text-decoration-none">Recuperar Senha</a>
+  </div>
+
+  <!-- Link com cara de botão que leva à tela de criar conta (rota "registrar") -->
+  <a href="{{ url_for('registrar') }}" class="btn btn-primary w-100">CADASTRAR</a>
+</form>
+
+<!-- Dica para testes. Pode apagar depois. text-muted = cinza; small = letra menor -->
+<p class="text-center text-muted small mt-3 mb-0">
+  Teste: admin@cineclub.com (Administrador) ou carlos@example.com (Usuário), senha 123456
+</p>
+{% endblock %}

@@ -1,0 +1,82 @@
+{# CADASTRO DE SESSÕES. Página só do Administrador. #}
+{% extends 'base.html' %}
+
+{% block content %}
+{# Quando editando for verdadeiro (rota /editar/ID), o título muda para Edição #}
+<h1 class="titulo-pagina">{{ 'Edição' if editando else 'Cadastro' }} de Sessões</h1>
+
+{% for erro in erros %}
+<div class="alert alert-danger py-2" role="alert">{{ erro }}</div>
+{% endfor %}
+{% if sucesso %}
+<div class="alert alert-success py-2" role="alert">{{ sucesso }}</div>
+{% endif %}
+
+<div class="painel">
+
+  {# Se ainda não existe nenhum filme, avisa: uma sessão precisa de um filme #}
+  {% if not filmes %}
+  <div class="alert alert-warning">
+    Cadastre ao menos um filme antes de criar uma sessão.
+    <a href="{{ url_for('cadastrar_filme') }}" class="alert-link">Cadastrar filme</a>
+  </div>
+  {% endif %}
+
+  <form method="post">
+
+    <!-- LINHA 1: Filme (8 colunas) e Sala (4 colunas) -->
+    <div class="row mb-3">
+      <div class="col-md-8">
+        <label for="filme" class="form-label">Filme:</label>
+        <select class="form-select" id="filme" name="filme">
+          <option value="">-- ESCOLHA --</option>
+          {# "filmes" aqui é a lista de TÍTULOS dos filmes já cadastrados #}
+          {% for f in filmes %}
+          <option value="{{ f }}" {% if dados_form.filme == f %}selected{% endif %}>{{ f }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="sala" class="form-label">Sala:</label>
+        <select class="form-select" id="sala" name="sala">
+          <option value="">-- ESCOLHA --</option>
+          {% for s in salas %}
+          <option value="{{ s }}" {% if dados_form.sala == s %}selected{% endif %}>{{ s }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <!-- LINHA 2: Data, Horário e Valor (4 colunas cada) -->
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <label for="data" class="form-label">Data da Sessão:</label>
+        <!-- type="date": calendário -->
+        <input type="date" class="form-control" id="data" name="data" value="{{ dados_form.data }}">
+      </div>
+      <div class="col-md-4">
+        <label for="horario" class="form-label">Horário:</label>
+        <!-- type="time": seletor de horas e minutos -->
+        <input type="time" class="form-control" id="horario" name="horario" value="{{ dados_form.horario }}">
+      </div>
+      <div class="col-md-4">
+        <label for="valor" class="form-label">Valor do Ingresso (R$):</label>
+        <!-- type="text" para aceitar vírgula (25,00). O app.py converte para número. -->
+        <input type="text" class="form-control" id="valor" name="valor" value="{{ dados_form.valor }}" placeholder="0,00">
+      </div>
+    </div>
+
+    <!-- BOTÕES: Voltar (link) à esquerda; Limpar e Salvar juntos à direita -->
+    <div class="d-flex justify-content-between align-items-center">
+      <a href="{{ url_for('listar_sessoes') }}" class="text-decoration-none ms-3">Voltar</a>
+      <!-- Limpar e Salvar ficam juntos, no lado direito.
+           type="reset" limpa todos os campos sem enviar nada; type="submit" envia o formulário para o app.py.
+           me-2 = pequeno espaço à direita do Limpar, para separar dos botões. -->
+      <div>
+        <button type="reset" class="btn btn-secondary me-2">Limpar</button>
+        <button type="submit" class="btn btn-success">Salvar</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

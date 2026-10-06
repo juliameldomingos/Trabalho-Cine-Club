@@ -1,0 +1,63 @@
+{# CADASTRO DE FILMES. Página só do Administrador. #}
+{% extends 'base.html' %}
+
+{% block content %}
+{# Quando editando for verdadeiro (rota /editar/ID), o título muda para Edição #}
+<h1 class="titulo-pagina">{{ 'Edição' if editando else 'Cadastro' }} de Filmes</h1>
+
+{# Erros de validação e mensagem de sucesso (mesma ideia do cadastro de usuários) #}
+{% for erro in erros %}
+<div class="alert alert-danger py-2" role="alert">{{ erro }}</div>
+{% endfor %}
+{% if sucesso %}
+<div class="alert alert-success py-2" role="alert">{{ sucesso }}</div>
+{% endif %}
+
+<div class="painel">
+  <form method="post">
+
+    <!-- LINHA 1: Título e Diretor (6 colunas cada) -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="titulo" class="form-label">Título do Filme:</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" value="{{ dados_form.titulo }}">
+      </div>
+      <div class="col-md-6">
+        <label for="diretor" class="form-label">Diretor:</label>
+        <input type="text" class="form-control" id="diretor" name="diretor" value="{{ dados_form.diretor }}">
+      </div>
+    </div>
+
+    <!-- LINHA 2: Gênero (lista de opções) e Ano -->
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <label for="genero" class="form-label">Gênero:</label>
+        <select class="form-select" id="genero" name="genero">
+          <option value="">-- ESCOLHA --</option>
+          {# Uma option para cada gênero da lista "generos" do app.py #}
+          {% for g in generos %}
+          <option value="{{ g }}" {% if dados_form.genero == g %}selected{% endif %}>{{ g }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="ano" class="form-label">Ano de Lançamento:</label>
+        <!-- type="number" só aceita números -->
+        <input type="number" class="form-control" id="ano" name="ano" value="{{ dados_form.ano }}">
+      </div>
+    </div>
+
+    <!-- BOTÕES: Voltar (link) à esquerda; Limpar e Salvar juntos à direita -->
+    <div class="d-flex justify-content-between align-items-center">
+      <a href="{{ url_for('listar_filmes') }}" class="text-decoration-none ms-3">Voltar</a>
+      <!-- Limpar e Salvar ficam juntos, no lado direito.
+           type="reset" limpa todos os campos sem enviar nada; type="submit" envia o formulário para o app.py.
+           me-2 = pequeno espaço à direita do Limpar, para separar dos botões. -->
+      <div>
+        <button type="reset" class="btn btn-secondary me-2">Limpar</button>
+        <button type="submit" class="btn btn-success">Salvar</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
