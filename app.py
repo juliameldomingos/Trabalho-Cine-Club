@@ -2,7 +2,7 @@
 #   Flask           -> cria a aplicação
 #   render_template -> mostra um arquivo HTML da pasta "templates"
 #   request         -> lê os dados enviados pelos formulários
-#   redirect        -> manda o navegador para outra rota
+#   redirect        -> manda o navegador para outra rota (endereço)
 #   url_for         -> gera o endereço de uma rota a partir do nome da função
 #   session         -> "memória" do navegador: guarda quem está logado
 from flask import Flask, render_template, request, redirect, url_for, session
@@ -30,19 +30,31 @@ filmes = [
     {'id': 1, 'titulo': 'O Poderoso Chefão', 'diretor': 'Francis Ford Coppola',
      'genero': 'Crime', 'ano': '1972'},
     {'id': 2, 'titulo': 'Matrix', 'diretor': 'Lana e Lilly Wachowski',
-     'genero': 'Ficção científica', 'ano': '1999'}
+     'genero': 'Ficção científica', 'ano': '1999'},
+    {'id': 3, 'titulo': 'Procurando Nemo', 'diretor': 'Andrew Stanton',
+     'genero': 'Infantil', 'ano': '2003'},
+    {'id': 4, 'titulo': 'Harry Potter e a Pedra Filosofal', 'diretor': 'Chris Columbus',
+     'genero': 'Fantasia', 'ano': '2001'}
 ]
 
 sessoes = [
-    {'id': 1, 'filme': 'O Poderoso Chefão', 'data': '25/10/2026', 'horario': '19:00',
-     'sala': 'Sala 1 - Standard', 'valor': '25,00'}
+    {'id': 1, 'filme': 'O Poderoso Chefão', 'data': '24/10/2026', 'horario': '14:00',
+     'sala': 'Sala 1 - Standard', 'valor': '25,00'},
+    {'id': 1, 'filme': 'O Poderoso Chefão', 'data': '24/10/2026', 'horario': '19:00',
+     'sala': 'Sala 2 - IMAX', 'valor': '25,00'},
+    {'id': 2, 'filme': 'Matrix', 'data': '25/10/2026', 'horario': '19:00',
+     'sala': 'Sala 1 - Standard', 'valor': '25,00'},
+    {'id': 3, 'filme': 'O Poderoso Chefão', 'data': '24/10/2026', 'horario': '14:00',
+     'sala': 'Sala 2 - IMAX', 'valor': '25,00'},
+    {'id': 4, 'filme': 'Harry Potter e a Pedra Filosofal', 'data': '24/10/2026', 'horario': '19:30',
+          'sala': 'Sala 3 - VIP', 'valor': '30,00'}
 ]
 
 # Opções que aparecem nos campos de seleção (<select>)
 NIVEIS = ['Usuário', 'Administrador']
 ESTADOS = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
            'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']
-GENEROS = ['Ação', 'Animação', 'Comédia', 'Crime', 'Drama', 'Ficção científica', 'Terror', 'Romance']
+GENEROS = ['Ação', 'Animação', 'Aventura', 'Comédia', 'Crime', 'Drama', 'Fantasia', 'Ficção científica', 'Intantil', 'Terror', 'Romance']
 SALAS = ['Sala 1 - Standard', 'Sala 2 - IMAX', 'Sala 3 - VIP']
 
 
