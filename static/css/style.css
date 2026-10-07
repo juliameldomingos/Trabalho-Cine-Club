@@ -1,9 +1,5 @@
 /* =====================================================================
    ESTILO DO CINE CLUB
-   Visual simples: fundo preto com detalhes em vermelho (e roxo em um botão).
-   Este arquivo é carregado DEPOIS do Bootstrap, por isso o que escrevemos
-   aqui "ganha" do Bootstrap quando os dois mexem na mesma coisa.
-   Para trocar as cores do site inteiro, mude só as variáveis abaixo.
    ===================================================================== */
 
 /* ---------- 1. CORES ---------- */
