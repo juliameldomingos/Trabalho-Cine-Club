@@ -88,8 +88,8 @@
           <input class="form-control" type="search" placeholder="Procurar" aria-label="Procurar">
         </form>
 
-        {# Mostra o nome e o nível de quem está logado #}
-        <span class="text-white mx-3">{{ session.get('usuario') }} ({{ session.get('nivel') }})</span>
+        {# Mostra o nome de quem está logado #}
+        <span class="text-white mx-3">{{ session.get('usuario') }} </span>
 
         <!-- Botão SAIR: a rota "sair" apaga o login e volta para a tela de entrada -->
         <a href="{{ url_for('sair') }}" class="btn btn-outline-light">SAIR</a>
