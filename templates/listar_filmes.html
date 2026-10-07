@@ -2,7 +2,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- Linha com o título à esquerda e o botão ADICIONAR à direita.
+<!-- Linha com o título à esquerda e o botão ADICIONAR à direita
      d-flex = itens lado a lado; justify-content-between = um em cada ponta;
      align-items-end = alinhados pela base; mb-3 = margem embaixo. -->
 <div class="d-flex justify-content-between align-items-end mb-3">
@@ -44,7 +44,7 @@
           <td>{{ item.ano }}</td>
           {% if session.get('nivel') == 'Administrador' %}
           <td class="text-nowrap">
-            <!-- EDITAR: link para a página de cadastro, mas com o ID do item na URL.
+            <!-- EDITAR: link para a página de cadastro, mas com o ID do item na URL
                  url_for com id=item.id monta o endereço de edição (ex.: /filmes/editar/2). -->
             <a href="{{ url_for('cadastrar_filme', id=item.id) }}" class="btn btn-sm btn-outline-light">Editar</a>
             <!-- EXCLUIR: formulário com method post (excluir muda dados, então não pode ser um link comum).
