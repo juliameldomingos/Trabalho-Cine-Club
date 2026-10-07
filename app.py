@@ -421,7 +421,7 @@ def cadastrar_sessao(id=None):
         else:
             dados_form[campo] = ''
 
-    # Na edição, a data guardada é 25/10/2026, mas o campo de data do HTML precisa de 2026-10-25
+    # Na edição, a data guardada é 24/10/2026, mas o campo de data do HTML precisa de 2026-10-24
     if sessao is not None:
         partes = sessao['data'].split('/')
         dados_form['data'] = partes[2] + '-' + partes[1] + '-' + partes[0]
@@ -452,7 +452,7 @@ def cadastrar_sessao(id=None):
 
         if not erros:
             novo = dados_form.copy()
-            # O campo de data envia 2026-10-25; guardamos como 25/10/2026
+            # O campo de data envia 2026-10-24; guardamos como 24/10/2026
             partes = novo['data'].split('-')
             novo['data'] = partes[2] + '/' + partes[1] + '/' + partes[0]
             novo['valor'] = '{:.2f}'.format(valor).replace('.', ',')

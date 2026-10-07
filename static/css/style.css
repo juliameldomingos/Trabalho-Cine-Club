@@ -85,14 +85,14 @@ html[data-bs-theme="dark"] {
   --bs-btn-active-bg: var(--vermelho-escuro);
   --bs-btn-active-border-color: var(--vermelho-escuro);
 }
-/* CADASTRAR (login): roxo */
+/* CADASTRAR (login): verde  */
 .btn-primary {
   --bs-btn-bg: var(--roxo);
   --bs-btn-border-color: var(--roxo);
-  --bs-btn-hover-bg: #9147d6;
-  --bs-btn-hover-border-color: #9147d6;
-  --bs-btn-active-bg: #5e1f96;
-  --bs-btn-active-border-color: #5e1f96;
+  --bs-btn-hover-bg: #25c932;
+  --bs-btn-hover-border-color: #47d65a;
+  --bs-btn-active-bg: #04270f;
+  --bs-btn-active-border-color: #1f9625;
 }
 
 /* ---------- 9. TABELAS ---------- */
